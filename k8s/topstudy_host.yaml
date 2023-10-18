@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-topstudy
+  namespace: backend
+  annotations:
+    cert-manager.io/issuer: letsencrypt-nginx
+spec:
+  tls:
+   - hosts:
+     - app.topstudy.tech
+     secretName: letsencrypt-nginx-topstudy
+  rules:
+    - host: app.topstudy.tech
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: web
+                port:
+                  number: 80
+  ingressClassName: nginx
+ 
+ 
+
